@@ -826,10 +826,6 @@ export namespace ProviderTransform {
       }
     }
 
-    if (input.providerOptions?.extraBody) {
-      Object.assign(result, input.providerOptions.extraBody)
-    }
-
     return result
   }
 
@@ -875,6 +871,12 @@ export namespace ProviderTransform {
   }
 
   export function providerOptions(model: Provider.Model, options: { [x: string]: any }) {
+    const { extraBody, ...restOptions } = options
+    const expandedOptions = {
+      ...restOptions,
+      ...(extraBody || {}),
+    }
+
     if (model.api.npm === "@ai-sdk/gateway") {
       // Gateway providerOptions are split across two namespaces:
       // - `gateway`: gateway-native routing/caching controls (order, only, byok, etc.)
@@ -884,8 +886,8 @@ export namespace ProviderTransform {
       const i = model.api.id.indexOf("/")
       const rawSlug = i > 0 ? model.api.id.slice(0, i) : undefined
       const slug = rawSlug ? (SLUG_OVERRIDES[rawSlug] ?? rawSlug) : undefined
-      const gateway = options.gateway
-      const rest = Object.fromEntries(Object.entries(options).filter(([k]) => k !== "gateway"))
+      const gateway = expandedOptions.gateway
+      const rest = Object.fromEntries(Object.entries(expandedOptions).filter(([k]) => k !== "gateway"))
       const has = Object.keys(rest).length > 0
 
       const result: Record<string, any> = {}
@@ -906,7 +908,7 @@ export namespace ProviderTransform {
     }
 
     const key = sdkKey(model.api.npm) ?? model.providerID
-    return { [key]: options }
+    return { [key]: expandedOptions }
   }
 
   export function maxOutputTokens(model: Provider.Model): number {
