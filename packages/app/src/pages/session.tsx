@@ -1732,6 +1732,11 @@ export default function Page() {
                     }}
                     renderedUserMessages={historyWindow.renderedUserMessages()}
                     anchor={anchor}
+                    activeMessageId={store.messageId}
+                    onMessageClick={(messageId) => {
+                      autoScroll.pause()
+                      scrollToMessage({ id: messageId } as UserMessage, "smooth")
+                    }}
                   />
                 </Show>
               </Match>

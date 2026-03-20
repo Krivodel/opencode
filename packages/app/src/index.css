@@ -1,6 +1,94 @@
 @import "@opencode-ai/ui/styles/tailwind";
 
 @layer components {
+  .message-pagination {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 4px;
+    background: var(--background-stronger);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .message-pagination-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .message-pagination-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-weak);
+    opacity: 0.4;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .message-pagination-dot:hover {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+
+  .message-pagination-dot--active {
+    opacity: 1;
+    background: var(--icon-interactive-base);
+    transform: scale(1.1);
+  }
+
+  .message-pagination-tooltip-content {
+    max-width: 280px;
+    max-height: 120px;
+    overflow: hidden;
+    background: var(--background-stronger);
+    border: 1px solid var(--border-base);
+    border-radius: 8px;
+    padding: 10px 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .message-pagination-tooltip {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-base);
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .message-pagination-layout {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+  }
+
+  .message-pagination-content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .message-pagination-sidebar {
+    width: 32px;
+    flex-shrink: 0;
+    position: relative;
+  }
   [data-component="getting-started"] {
     container-type: inline-size;
     container-name: getting-started;

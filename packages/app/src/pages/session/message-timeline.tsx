@@ -18,6 +18,7 @@ import { Binary } from "@opencode-ai/util/binary"
 import { getFilename } from "@opencode-ai/util/path"
 import { Popover as KobaltePopover } from "@kobalte/core/popover"
 import { shouldMarkBoundaryGesture, normalizeWheelDelta } from "@/pages/session/message-gesture"
+import { MessagePagination } from "@/pages/session/message-pagination"
 import { SessionContextUsage } from "@/components/session-context-usage"
 import { useDialog } from "@opencode-ai/ui/context/dialog"
 import { useLanguage } from "@/context/language"
@@ -216,6 +217,8 @@ export function MessageTimeline(props: {
   onLoadEarlier: () => void
   renderedUserMessages: UserMessage[]
   anchor: (id: string) => string
+  activeMessageId: string | undefined
+  onMessageClick: (messageId: string) => void
 }) {
   let touchGesture: number | undefined
 
@@ -600,7 +603,9 @@ export function MessageTimeline(props: {
             <Icon name="arrow-down-to-line" />
           </button>
         </div>
-        <ScrollView
+        <div class="message-pagination-layout">
+          <div class="message-pagination-content">
+            <ScrollView
           viewportRef={props.setScrollRef}
           onWheel={(e) => {
             const root = e.currentTarget
@@ -1020,6 +1025,15 @@ export function MessageTimeline(props: {
             </div>
           </div>
         </ScrollView>
+          </div>
+          <div class="message-pagination-sidebar">
+            <MessagePagination
+              messages={props.renderedUserMessages}
+              activeMessageId={props.activeMessageId}
+              onDotClick={props.onMessageClick}
+            />
+          </div>
+        </div>
       </div>
     </Show>
   )
