@@ -12,17 +12,25 @@ function getMessagePreview(messageId: string): string {
   const element = document.querySelector(`[data-message-id="${messageId}"]`)
   if (!element) return ""
 
-  const textContent = element.textContent || ""
+  const textElement = element.querySelector('[data-slot="user-message-text"]')
+  if (!textElement) return ""
+
+  const textContent = textElement.textContent || ""
   return textContent
     .replace(/\s+/g, " ")
     .trim()
-    .slice(0, 200)
+    .slice(0, 300)
 }
 
-function truncateLines(text: string, maxLines: number): string {
+function truncateLines(text: string, maxLines: number, maxChars: number): string {
+  if (text.length > maxChars) {
+    return text.slice(0, maxChars).trim() + "..."
+  }
   const lines = text.split("\n")
-  if (lines.length <= maxLines) return text
-  return lines.slice(0, maxLines).join("\n") + "..."
+  if (lines.length > maxLines) {
+    return lines.slice(0, maxLines).join("\n").trim() + "..."
+  }
+  return text
 }
 
 export function MessagePagination(props: MessagePaginationProps) {
@@ -53,7 +61,7 @@ export function MessagePagination(props: MessagePaginationProps) {
             const isActive = createMemo(() => props.activeMessageId === messageId)
             const preview = createMemo(() => {
               const text = previews()[messageId] || ""
-              return truncateLines(text, 5)
+              return truncateLines(text, 5, 280)
             })
 
             return (

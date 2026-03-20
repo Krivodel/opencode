@@ -24,8 +24,8 @@
   }
 
   .message-pagination-dot {
-    width: 8px;
-    height: 8px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--text-weak);
     opacity: 0.4;
@@ -48,7 +48,7 @@
   }
 
   .message-pagination-tooltip-content {
-    max-width: 280px;
+    max-width: 420px;
     max-height: 120px;
     overflow: hidden;
     background: var(--background-stronger);
@@ -59,7 +59,7 @@
   }
 
   .message-pagination-tooltip {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.5;
     color: var(--text-base);
     white-space: pre-wrap;
