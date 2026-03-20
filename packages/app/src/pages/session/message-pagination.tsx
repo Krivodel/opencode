@@ -67,6 +67,7 @@ export function MessagePagination(props: MessagePaginationProps) {
             return (
               <Tooltip
                 placement="left"
+                openDelay={0}
                 value={
                   <div class="message-pagination-tooltip">
                     {preview() || "..."}
