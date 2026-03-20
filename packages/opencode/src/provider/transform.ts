@@ -826,6 +826,10 @@ export namespace ProviderTransform {
       }
     }
 
+    if (input.providerOptions?.extraBody) {
+      Object.assign(result, input.providerOptions.extraBody)
+    }
+
     return result
   }
 
